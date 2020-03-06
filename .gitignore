@@ -1,3 +1,13 @@
+example_projects
+pydub
+combined_sound
+splited_audio
+LibriSpeech
+LibriSpeech2
+.ipynb_checkpoints
+
+.DS_Store
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
