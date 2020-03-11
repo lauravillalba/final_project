@@ -8,12 +8,12 @@ from scipy.fftpack import fft
 import glob
 import sys
 
-audioFile = sys.argv[1]
+# audioFile = sys.argv[1] --> en caso de ejecutar este .py desde la terminal. Al ejecutar desde api.py pasar el parámetro contenido en la función featuresFFT.
 
 def getAudio(audioFile):
     return AudioSegment.from_file(audioFile, format='mp3')
 
-def featuresFFT():
+def featuresFFT(audioFile):
     print("Iniciando featuresFFT...")
     # Audios de 20' con overlab 50%:
     audio_original = getAudio(audioFile)
@@ -76,7 +76,8 @@ def predictAudio(X):
             if n[1]==s:
                 speakers_names.append(n[0])
 
-    print ('En el audio hablan las siguientes personas: ', set(speakers_names), '\nHablan en el siguiente orden: ', speakers_names)
+    print ('En el audio hablan las siguientes personas: ', set(speakers_names), '\nHablan en el siguiente orden: ', '-'.join(speakers_names))
+    
+    return '\n'.join(speakers_names)
 
-
-predictAudio(featuresFFT())
+#predictAudio(featuresFFT())
