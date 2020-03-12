@@ -16,7 +16,7 @@ def featuresFourier(x):
 def featuresMFCC(x):
     SAMPLE_RATE = 22050
     y, sr = librosa.load(x, sr=SAMPLE_RATE, duration = 20) # Chop audio at 5 secs... 
-    mfcc = librosa.feature.mfcc(y=y, sr=SAMPLE_RATE, n_mfcc = 5) # 5 MFCC components
+    mfcc = librosa.feature.mfcc(y=y, sr=SAMPLE_RATE, n_mfcc = 20) # 5 MFCC components
     return mfcc.tolist()
 
 def dataGenerator():
@@ -27,8 +27,8 @@ def dataGenerator():
     df['file'] = df.path.apply(lambda x: (x.split("/")[3]))
     df['label'] = df.file.apply(lambda x: (x.split("_")[0]))
     df['audio_num'] = df.file.apply(lambda x: (x.split("_")[1].split(".")[0]))
-    df['fft'] = df.path.apply(lambda x: featuresFourier(x))
-    #df['mfcc'] = df.path.apply(lambda x: featuresMFCC(x))
+    #df['fft'] = df.path.apply(lambda x: featuresFourier(x))
+    df['mfcc'] = df.path.apply(lambda x: featuresMFCC(x))
     #df['fft+mfcc'] = df.ftt.apply(lambda x: x.append())
 
 
@@ -58,7 +58,7 @@ def dataTrainTest (num):
     print("df.shape = ", df.shape)
 
     y = df['label_num'].to_numpy()
-    X = np.vstack(df['fft'])
+    X = np.vstack(df['mfcc'])
 
     train = int(df.shape[0]*int(num)/100)
     X_train = X[:train]
