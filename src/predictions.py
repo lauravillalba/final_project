@@ -7,6 +7,7 @@ import numpy as np
 from scipy.fftpack import fft
 import glob
 import sys
+from transcription import transcripAudio
 
 # audioFile = sys.argv[1] --> en caso de ejecutar este .py desde la terminal. Al ejecutar desde api.py pasar el parámetro contenido en la función featuresFFT.
 
@@ -19,30 +20,39 @@ def featuresFFT(audioFile):
     audio_original = getAudio(audioFile)
     print("Completado getAudio de ", audioFile)
     ftt = []
+    speech = []
     interval = 20000
     counter = 0
-    num = (len(audio_original)//interval)*2
+    num = len(audio_original)//interval
+    i = 0
 
     for _ in list(range(num)):
         if counter == 0:
             splited = audio_original[0:interval]
             ftt.append(list(np.abs(fft(splited.get_array_of_samples()))))
-            counter+=int(interval/2)
-            interval+=int(counter)
+            speech.append(transcripAudio(splited))
+            counter+=int(20000)
+            interval+=int(20000)
+            print(f"Speech[{i}]: {speech}, len(speech) = {len(speech)}")
         else: 
             splited = audio_original[counter:interval]
             ftt.append(list(np.abs(fft(splited.get_array_of_samples()))))
-            counter+=10000
-            interval+=10000
+            speech.append(transcripAudio(splited))
+            counter+=int(20000)
+            interval+=int(20000)
+            print(f"Speech[{i}]: {speech}, len(speech) = {len(speech)}")
+        i+=1
+    print(f"Resumen speech: {speech}" )
 
     print('FIN! Ya tenemos features para predecir')
 
     df= pd.DataFrame()
-    df['ftt'] = ftt[:-1]
+    df['ftt'] = ftt
     X = np.vstack(df.ftt)
-    return X
 
-def predictAudio(X):
+    return X, speech
+
+def predictAudio(X, speech):
     print("Iniciando predictAudio...")
     with open('../models/50epochs.json','r') as f:
         model_json = json.load(f)
@@ -67,18 +77,28 @@ def predictAudio(X):
         elif i == len(speakers_predict)-1 and speakers_predict[i]!= speakers[-1]:
             speakers.append(e)
     
+    print(f"Speakers sin repetición: {speakers}\n {len(speakers)}")
     with open('../outputs/names_id.json') as f:
         names = json.load(f)
-    #print("Correspondecia nombres vs etiquetas: ", names)
+    print("Correspondecia nombres vs etiquetas: ", names)
 
     speakers_names = []
     for s in speakers:
         for n in names.items():
             if n[1]==s:
-                speakers_names.append(n[0])
+                speakers_names.append((n[0]))
 
+    print(f"speakers_names: {speakers_names}")
     print ('En el audio hablan las siguientes personas: ', set(speakers_names), '\nHablan en el siguiente orden: ', '-'.join(speakers_names))
     
-    return '\n'.join(speakers_names)
+    allNames = []
+    for s in speakers_predict:
+        for n in names.items():
+            if n[1]==s:
+                allNames.append((n[0]))
+
+    print(f'allNames: {allNames}')
+    #return '\n'.join(speakers_names)
+    return allNames, speakers_names, speech
 
 #predictAudio(featuresFFT())

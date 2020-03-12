@@ -1,5 +1,5 @@
 import os
-from flask import Flask, flash, request, redirect, url_for, send_from_directory
+from flask import Flask, flash, request, redirect, url_for, send_from_directory, jsonify
 from werkzeug.utils import secure_filename
 from predictions import predictAudio, featuresFFT
 import glob
@@ -13,6 +13,10 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+@app.route('/')
+def inicio():
+    return 
 
 
 @app.route('/uploads/<filename>')
@@ -53,8 +57,15 @@ def upload_file():
 def speakersInAudio(audioname):
     #audioName => audio_mix.mp3
     path = f"../outputs/audioMix/{audioname}"
-    result = predictAudio(featuresFFT(path))
-    print("Esto es api.py:\n",result)
-    return result
+    X, speech = featuresFFT(path)
+    allNames, speakers_names, speech = predictAudio(X, speech)
+    
+    subtitles = tuple(zip(allNames, speech))
+    print(subtitles)
+
+    resum = speakers_names
+    print("speakers_names: ",speakers_names)
+
+    return jsonify(resum,subtitles)
 
 app.run('0.0.0.0', port=5000, debug=False, threaded=False)
