@@ -44,17 +44,18 @@ def featuresFFT(audioFile):
 
 def predictAudio(X):
     print("Iniciando predictAudio...")
-    with open('../models/1_nn.json','r') as f:
+    with open('../models/50epochs.json','r') as f:
         model_json = json.load(f)
 
     model = model_from_json(model_json)
-    model.load_weights('../models/1_nn.h5')
+    model.load_weights('../models/50epochs.h5')
 
     predictions = model.predict(X)
     df= pd.DataFrame()
     df['y_predict'] = [list(e) for e in predictions]
     df['label_predict'] = df['y_predict'].apply(lambda x: x.index(max(x)))
     
+    #print('predictions: ', predictions)
     speakers_predict = df.label_predict.to_list()
     speakers = []
     

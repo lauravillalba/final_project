@@ -4,12 +4,20 @@ from pydub import AudioSegment
 import numpy as np
 from scipy.fftpack import fft
 import json
+import librosa
+import librosa.display
 
 def fileList():
     return glob.glob("../outputs/selection/**.mp3")
 
 def featuresFourier(x):
     return np.abs(fft((AudioSegment.from_file(x, format='mp3')).get_array_of_samples()))
+
+def featuresMFCC(x):
+    SAMPLE_RATE = 22050
+    y, sr = librosa.load(x, sr=SAMPLE_RATE, duration = 20) # Chop audio at 5 secs... 
+    mfcc = librosa.feature.mfcc(y=y, sr=SAMPLE_RATE, n_mfcc = 5) # 5 MFCC components
+    return mfcc.tolist()
 
 def dataGenerator():
     print("Iniciando dataGenerator...")
@@ -20,6 +28,9 @@ def dataGenerator():
     df['label'] = df.file.apply(lambda x: (x.split("_")[0]))
     df['audio_num'] = df.file.apply(lambda x: (x.split("_")[1].split(".")[0]))
     df['fft'] = df.path.apply(lambda x: featuresFourier(x))
+    #df['mfcc'] = df.path.apply(lambda x: featuresMFCC(x))
+    #df['fft+mfcc'] = df.ftt.apply(lambda x: x.append())
+
 
     df.sort_values(by=('audio_num'),inplace = True)
     names = list(df.label.unique())
@@ -57,4 +68,4 @@ def dataTrainTest (num):
 
     return X_train, y_train, X_test, y_test, df
 
-dataGenerator()
+#dataGenerator()

@@ -35,7 +35,7 @@ def trainModel(num):
     print("Model compiled")
     model.fit(X_train,
                 y_train,
-                epochs=5,
+                epochs=50,
                 batch_size=50,
                 validation_data=(X_test, y_test))
 
@@ -49,7 +49,7 @@ def trainModel(num):
     print("Predicción: ", predictions)
 
     print("\nModelo: ", model,"\n")
-    name='../models/pruebaSYS'
+    name='../models/50epochs'
 
     model_json = model.to_json()
     with open(name+'.json', "w") as json_file:
@@ -68,6 +68,8 @@ def resultsPredict (predictions, y_test):
     df_predict['label_predict'] = df_predict['y_predict'].apply(lambda x: x.index(max(x)))
     df_predict['diff'] = (df_predict.y_test == df_predict.label_predict)
     print("Validación predicciones: \n", df_predict[['y_test', 'label_predict', 'diff']])
+
+    print('Conteo de aciertos: ',df_predict['diff'].value_counts())
 
 
 pred, yTest = trainModel(num)
