@@ -11,7 +11,8 @@ def fileList():
     return glob.glob("../outputs/selection/**.mp3")
 
 def featuresFourier(x):
-    return np.abs(fft((AudioSegment.from_file(x, format='mp3')).get_array_of_samples()))
+    #audios de 15 segundos:
+    return np.abs(fft((AudioSegment.from_file(x, format='mp3')[:15000]).get_array_of_samples()))
 
 def featuresMFCC(x):
     SAMPLE_RATE = 22050

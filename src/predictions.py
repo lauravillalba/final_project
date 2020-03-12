@@ -19,7 +19,7 @@ def featuresFFT(audioFile):
     audio_original = getAudio(audioFile)
     print("Completado getAudio de ", audioFile)
     ftt = []
-    interval = 20000
+    interval = 15000
     counter = 0
     num = (len(audio_original)//interval)*2
 
@@ -32,8 +32,8 @@ def featuresFFT(audioFile):
         else: 
             splited = audio_original[counter:interval]
             ftt.append(list(np.abs(fft(splited.get_array_of_samples()))))
-            counter+=10000
-            interval+=10000
+            counter+=7500
+            interval+=7500
 
     print('FIN! Ya tenemos features para predecir')
 
@@ -44,11 +44,11 @@ def featuresFFT(audioFile):
 
 def predictAudio(X):
     print("Iniciando predictAudio...")
-    with open('../models/50epochs.json','r') as f:
+    with open('../models/22epochs_15seg.json','r') as f:
         model_json = json.load(f)
 
     model = model_from_json(model_json)
-    model.load_weights('../models/50epochs.h5')
+    model.load_weights('../models/22epochs_15seg.h5')
 
     predictions = model.predict(X)
     df= pd.DataFrame()

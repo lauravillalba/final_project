@@ -35,7 +35,7 @@ def trainModel(num):
     print("Model compiled")
     model.fit(X_train,
                 y_train,
-                epochs=50,
+                epochs=22,
                 batch_size=50,
                 validation_data=(X_test, y_test))
 
@@ -49,7 +49,7 @@ def trainModel(num):
     print("Predicción: ", predictions)
 
     print("\nModelo: ", model,"\n")
-    name='../models/50epochs'
+    name='../models/22epochs_15seg'
 
     model_json = model.to_json()
     with open(name+'.json', "w") as json_file:
