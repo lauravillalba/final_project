@@ -18,17 +18,11 @@ for p in people:
         file_dict[l]= files
     
     all_files[p] = file_dict
-#print('AllFiles: ', all_files)
 
 #Unifico audios por persona y cambio a formato MP3:
-
 for p_id, p_info in all_files.items():
-    #print(p_id)
-    #print(p_info)
     audio = 0
     for key, values in p_info.items():
-        #print (key)
-        #print(values)
         for v in values:
             audio += AudioSegment.from_file(f'../inputs/LibriSpeech/test-other/{p_id}/{key}/{v}', format = 'flac')
     
@@ -47,7 +41,6 @@ discarted = [e[0] for e in time if e[1]<600000]
 print('Descartados: ',discarted)
 
 #Audios 20' y overlap 50%:
-
 for p in people:
     if p not in discarted:
         interval = 20000

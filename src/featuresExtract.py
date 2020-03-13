@@ -4,8 +4,7 @@ from pydub import AudioSegment
 import numpy as np
 from scipy.fftpack import fft
 import json
-import librosa
-import librosa.display
+
 
 def fileList():
     return glob.glob("../outputs/selection/**.mp3")
