@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diálogo</title>
+</head>
+<body>
+    <style>
+        body{
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .main{
+            max-width:800px;
+            display:flex;
+            align-items: center;
+            flex-direction: column;
+            margin:0 auto;
+        }
+        h1{
+            color:black;
+            font-size:30px;
+            margin-bottom:50px;
+        }
+        p{
+            font-size: 25px;
+            line-height: 35px;
+            padding:10px;
+            color:#0d0d0d;
+            text-align:center;
+        }
+        .small{
+            margin-top:50px;
+            right:0;
+            text-align:center;
+            font-size:12px;
+        }
+
+        a{
+            padding:10px;
+            font-size:20px;
+            background-color: black;
+            color:white;
+            text-decoration: none;
+        }
+
+        a:hover{
+            background-color: yellow;
+            color: black;
+            transition: 0.3s;
+        }
+
+        ul{
+            list-style-type: none;
+        }
+
+        .person{
+            font-weight: bold;
+            font-size:16px;
+            text-align: left;
+        }
+
+        .dialogue{
+            font-size:20px;
+            margin-bottom:30px;
+            text-align:left;
+        }
+
+    
+    </style>
+    <div class="main">
+        <h1>Audio procesado: Escena 1 🎬</h1>
+        <ul>
+            {% for item in data %}
+                <li class="person">{{item[0]}}</li>
+                <li class="dialogue">{{item[1]}}</li>
+            {% endfor %}
+            </ul>
+    
+            <a href="/">Volver al inicio</a>
+    
+            <p class="small">Proyecto Final Data Analytics Bootcamp Ironhack ❤️Laura Villalba </p>
+    </div>
+    
+</body>
+</html>

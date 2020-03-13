@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Document </title>
+</head>
+<body>
+    <style>
+        body{
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .main{
+            max-width:800px;
+            display:flex;
+            align-items: center;
+            flex-direction: column;
+            margin:0 auto;
+        }
+        h1{
+            color:black;
+            font-size:50px;
+            margin-bottom:50px;
+        }
+        p{
+            font-size: 25px;
+            line-height: 35px;
+            padding:10px;
+            color:#0d0d0d;
+            text-align:center;
+        }
+        .small{
+            display:block;
+            position:fixed;
+            width:100%;
+            bottom:20px;
+            right:0;
+            text-align:right;
+            padding-right:50px;
+            font-size:12px;
+        }
+
+        a{
+            padding:10px;
+            font-size:20px;
+            background-color: black;
+            color:white;
+            text-decoration: none;
+        }
+
+        a:hover{
+            background-color: yellow;
+            color: black;
+            transition: 0.3s;
+        }
+
+        form input{
+            padding:10px 40px;
+            font-size:20px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        img{
+            width:500px;
+            object-fit: contain;
+            margin:0 auto;
+            display:block;
+        }
+
+        .hidden{
+            display:none;
+        }
+    </style>
+    <div class="main">
+        <h1>Sube tu archivo 🚀</h1>
+        <div class="content">
+            <p>Sube tu audio en formato mp3 y el sistema de inteligencia artificial deep learning lo analizará para darte la mejor transcripción que has visto en tu vida. ⭐️</p>
+            <form action="/speakers" method=post enctype=multipart/form-data>
+                <input type=file name=file>
+                <input type=submit value=Subir!🔥>
+            </form>
+        </div>
+        <div class="gif hidden">
+            <p>Listo! Tu archivo está siendo procesado, mientras tanto...</p>
+            <img src="https://media1.giphy.com/media/Sg86rhq4G3vqM/giphy.gif?cid=790b76116f02cf62633a2cece59a848b642bf781e21b7bf1&rid=giphy.gif"/>
+        </div>
+    </div>
+    <script>
+        document.querySelector('input[type=submit]').addEventListener('click', ()=>{
+            document.querySelector('.gif').classList.toggle('hidden')
+            document.querySelector('.content').classList.toggle('hidden')
+        })
+    </script>
+</body>
+
+</html>
