@@ -1,5 +1,3 @@
-![Portada](input/Portada.jpg)
-
 ------------------------------
                                              # Final-Project: ¿Quién y qué dice?
 ------------------------------
