@@ -49,7 +49,7 @@ def trainModel(num):
     print("Predicción: ", predictions)
 
     print("\nModelo: ", model,"\n")
-    name='../models/50epochs'
+    name='../models/50epochs_metrics'
 
     model_json = model.to_json()
     with open(name+'.json', "w") as json_file:
