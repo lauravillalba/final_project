@@ -1,4 +1,4 @@
-![Portada](/input/Portada.jpg)
+![Portada](input/Portada.jpg)
 
 ------------------------------
                                              # Final-Project: ¿Quién y qué dice?
